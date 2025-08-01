@@ -76,7 +76,6 @@
             <h2 class="text-xl sm:text-2xl font-semibold text-sky-700">日語入門口譯 模擬口試 (增強版v4)</h2>
         </header>
 
-        <!-- Progress Bar -->
         <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
             <div id="progress-bar" class="bg-sky-600 h-2.5 rounded-full" style="width: 0%"></div>
         </div>
@@ -85,15 +84,12 @@
             
             <div class="absolute top-4 right-4 flex gap-2">
                 <button id="toggle-furigana-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏振假名">
-                    <!-- Icon will be set by JS -->
-                </button>
+                    </button>
                 <button id="toggle-answers-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏答案">
-                    <!-- Icon will be set by JS -->
-                </button>
+                    </button>
             </div>
 
 
-            <!-- Step 1: Introduction -->
             <div id="step-1" data-step class="active">
                 <h3 class="text-2xl font-bold mb-4 text-gray-700">口試須知</h3>
                 <div class="space-y-3 text-gray-600">
@@ -114,45 +110,38 @@
                 </button>
             </div>
 
-            <!-- Step 2: Reading Aloud -->
             <div id="step-2" data-step>
                 <h3 class="text-2xl font-bold mb-2 text-gray-700">第一部分：文章朗讀</h3>
                 <p class="text-gray-500 mb-4">請朗讀以下所有文章。您需要為每篇文章單獨錄音。</p>
                 <div id="reading-articles-container" class="space-y-8">
-                    <!-- Articles will be injected here -->
-                </div>
+                    </div>
                 <div class="mt-8 flex justify-end">
                     <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
                 </div>
             </div>
 
-            <!-- Step 3: Article Questions -->
             <div id="step-3" data-step>
                 <h3 class="text-2xl font-bold mb-2 text-gray-700">第二部分：文章問答</h3>
                 <p class="text-gray-500 mb-4">請參考文章，回答下列所有問題。</p>
                 <div id="article-q-container" class="space-y-8">
-                    <!-- Article questions will be injected here -->
-                </div>
+                    </div>
                 <div class="mt-8 flex justify-between">
                     <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
                     <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
                 </div>
             </div>
 
-            <!-- Step 4: Personal Questions -->
             <div id="step-4" data-step>
                 <h3 class="text-2xl font-bold mb-2 text-gray-700">第三部分：個人問題</h3>
                 <p class="text-gray-500 mb-4">導師將提問所有個人問題，請作答。</p>
                 <div id="personal-q-container" class="space-y-6">
-                    <!-- Personal questions will be injected here -->
-                </div>
+                    </div>
                 <div class="mt-8 flex justify-between">
                     <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
                     <button id="finish-exam-btn" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700">完成考試，查看結果</button>
                 </div>
             </div>
 
-            <!-- Step 5: Results -->
             <div id="step-5" data-step>
                 <h3 class="text-2xl font-bold mb-4 text-gray-700">評分報告</h3>
                 <div id="results-loader" class="hidden flex-col items-center my-8">
@@ -165,8 +154,7 @@
                         <p id="total-score" class="text-5xl font-bold text-sky-700"></p>
                     </div>
                     <div id="results-details" class="space-y-6">
-                        <!-- Detailed results will be injected here -->
-                    </div>
+                        </div>
                     <button id="restart-exam-btn" class="mt-8 w-full bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
                         重新開始模擬考試
                     </button>
@@ -177,116 +165,116 @@
 
     <script>
 // ==================================================
-    // 題庫資料區 (未來請在此修改題目和答案)
-    // ==================================================
-    const articles = {
-        A: {
-            title: '旅行 (サントス)',
-            content: [
-                '<ruby>去年<rp>(</rp><rt>きょねん</rt><rp>)</rp></ruby>の<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>、わたしは<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>と<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へスキーに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>は<ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby><ruby>雪<rp>(</rp><rt>ゆき</rt><rp>)</rp></ruby>が<ruby>降<rp>(</rp><rt>ふ</rt><rp>)</rp></ruby>っていました。',
-                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ3<ruby>回<rp>(</rp><rt>かい</rt><rp>)</rp></ruby><ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>ったことがありますが、<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>は<ruby>初<rp>(</rp><rt>はじ</rt><rp>)</rp></ruby>めてです。',
-                'スキーもしたことがありません。',
-                '1<ruby>週間<rp>(</rp><rt>しゅうかん</rt><rp>)</rp></ruby><ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby>スキーを<ruby>練習<rp>(</rp><rt>れんしゅう</rt><rp>)</rp></ruby>しましたが、なかなか<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりませんでした。',
-                '<ruby>短<rp>(</rp><rt>みじか</rt><rp>)</rp></ruby>い<ruby>旅行<rp>(</rp><rt>りょこう</rt><rp>)</rp></ruby>でしたが、おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べたり、<ruby>買<rp>(</rp><rt>か</rt><rp>)</rp></ruby>い<ruby>物<rp>(</rp><rt>もの</rt><rp>)</rp></ruby>したりしました。',
-                'とても<ruby>楽<rp>(</rp><rt>たの</rt><rp>)</rp></ruby>しかったです。',
-                'ぜひまた<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きたいです。'
-            ],
-            questions: [
-                { q: 'サントスさんはいつ北海道へ行きましたか。', a: 'サントスさんは去年の冬、北海道へ行きました。' },
-                { q: 'サントスさんは何回スキーをしたことがありますか。', a: 'サントスさんはスキーをしたことがありません。' },
-                { q: '旅行で何をしましたか。', a: 'サントスさんはおいしい料理を食べたり、買い物をしたりしました。' }
-            ]
-        },
-        B: {
-            title: '週末 (サントス)',
-            content: [
-                'わたしは<ruby>先週<rp>(</rp><rt>せんしゅう</rt><rp>)</rp></ruby>の<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>、<ruby>友達<rp>(</rp><rt>ともだち</rt><rp>)</rp></ruby>の<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんのおうちへ<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>びに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんの<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>は3<ruby>人<rp>(</rp><rt>にん</rt><rp>)</rp></ruby>です。',
-                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さん<ruby>母親<rp>(</rp><rt>ははおや</rt><rp>)</rp></ruby>と<ruby>子<rp>(</rp><rt>こ</rt><rp>)</rp></ruby>どもが1<ruby>人<rp>(</rp><rt>り</rt><rp>)</rp></ruby>います。',
-                '<ruby>土曜日<rp>(</rp><rt>どようび</rp><rp>)</rp></ruby>の<ruby>夜<rp>(</rp><rt>よる</rt><rp>)</rp></ruby>、いっしょに<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>作<rp>(</rp><rt>つく</rp><rp>)</rp></ruby>って、<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べました。',
-                'ごはんを<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べてから、<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>を<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>ったり、ゲームで<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>んだりしました。',
-                '<ruby>日曜日<rp>(</rp><rt>にちようび</rp><rp>)</rp></ruby>、わたしたちは<ruby>海<rp>(</rp><rt>うみ</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>でしたから、<ruby>人<rp>(</rp><rt>ひと</rt><rp>)</rp></ruby>がたくさんいました。',
-                '<ruby>昼<rp>(</rp><rt>ひる</rt><rp>)</rp></ruby>ごはんはドイツ<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>のレストランで<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べました。',
-                'おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>をたくさん<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べて、おなかがいっぱいになりました。'
-            ],
-            questions: [
-                { q: 'サントスさんは先週の土曜日、どこへ行きましたか。', a: 'サントスさんは友達の田中さんのうちへ行きました。' },
-                { q: '田中さんの家族は何人ですか。', a: '田中さんの家族は3人です。' },
-                { q: '日曜日にどこで昼ごはんを食べましたか。', a: '日曜日にドイツ料理のレストランで昼ごはんを食べました。' }
-            ]
-        },
-        C: {
-            title: '趣味 (サントス)',
-            content: [
-                'わたしの<ruby>趣味<rp>(</rp><rt>しゅみ</rt><rp>)</rp></ruby>は<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ることです。',
-                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>はうちで<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>や<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDを<ruby>見<rp>(</rp><rt>み</rp><rp>)</rp></ruby>ます。',
-                '<ruby>今<rp>(</rp><rt>いま</rt><rp>)</rp></ruby>、わたしはDVDを200<ruby>枚<rp>(</rp><rt>まい</rt><rp>)</rp></ruby>ぐらい<ruby>持<rp>(</rp><rt>も</rt><rp>)</rp></ruby>っています。',
-                'わたしは<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>より<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のほうが<ruby>好<rp>(</rp><rt>す</rt><rp>)</rp></ruby>きですから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDがたくさんあります。',
-                '<ruby>日本<rp>(</rp><rt>にほん</rp><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>はおもしろいですから、<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>で<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>を<ruby>勉強<rp>(</rp><rt>べんきょう</rt><rp>)</rp></ruby>します。',
-                '<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>が<ruby>少<rp>(</rp><rt>すこ</rt><rp>)</rp></ruby>し<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりましたから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>って、<ruby>日本人<rp>(</rp><rt>にほんじん</rt><rp>)</rp></ruby>と<ruby>話<rp>(</rp><rt>はな</rt><rp>)</rp></ruby>したい、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>で<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>たいです。'
-            ],
-            questions: [
-                { q: 'サントスさんの趣味は何ですか。', a: 'サントスさんの趣味は映画を見ることです。' },
-                { q: 'サントスさんはDVDを何枚ぐらい持っていますか。', a: 'サントスさんはDVDを200枚ぐらい持っています。' },
-                { q: 'どうしてサントスさんは映画で日本語を勉強しますか。', a: '日本映画はおもしろいですから、サントスさんは映画で日本語を勉強します。' }
-            ]
-        }
-    };
+    // 題庫資料區 (未來請在此修改題目和答案)
+    // ==================================================
+    const articles = {
+        A: {
+            title: '旅行 (サントス)',
+            content: [
+                '<ruby>去年<rp>(</rp><rt>きょねん</rt><rp>)</rp></ruby>の<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>、わたしは<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>と<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へスキーに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>は<ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby><ruby>雪<rp>(</rp><rt>ゆき</rt><rp>)</rp></ruby>が<ruby>降<rp>(</rp><rt>ふ</rt><rp>)</rp></ruby>っていました。',
+                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ3<ruby>回<rp>(</rp><rt>かい</rt><rp>)</rp></ruby><ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>ったことがありますが、<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>は<ruby>初<rp>(</rp><rt>はじ</rt><rp>)</rp></ruby>めてです。',
+                'スキーもしたことがありません。',
+                '1<ruby>週間<rp>(</rp><rt>しゅうかん</rt><rp>)</rp></ruby><ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby>スキーを<ruby>練習<rp>(</rp><rt>れんしゅう</rt><rp>)</rp></ruby>しましたが、なかなか<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりませんでした。',
+                '<ruby>短<rp>(</rp><rt>みじか</rt><rp>)</rp></ruby>い<ruby>旅行<rp>(</rp><rt>りょこう</rt><rp>)</rp></ruby>でしたが、おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べたり、<ruby>買<rp>(</rp><rt>か</rt><rp>)</rp></ruby>い<ruby>物<rp>(</rp><rt>もの</rt><rp>)</rp></ruby>したりしました。',
+                'とても<ruby>楽<rp>(</rp><rt>たの</rt><rp>)</rp></ruby>しかったです。',
+                'ぜひまた<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きたいです。'
+            ],
+            questions: [
+                { q: 'サントスさんはいつ北海道へ行きましたか。', a: 'サントスさんは去年の冬、北海道へ行きました。' },
+                { q: 'サントスさんは何回スキーをしたことがありますか。', a: 'サントスさんはスキーをしたことがありません。' },
+                { q: '旅行で何をしましたか。', a: 'サントスさんはおいしい料理を食べたり、買い物をしたりしました。' }
+            ]
+        },
+        B: {
+            title: '週末 (サントス)',
+            content: [
+                'わたしは<ruby>先週<rp>(</rp><rt>せんしゅう</rt><rp>)</rp></ruby>の<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>、<ruby>友達<rp>(</rp><rt>ともだち</rt><rp>)</rp></ruby>の<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんのうちへ<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>びに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんの<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>は3<ruby>人<rp>(</rp><rt>にん</rt><rp>)</rp></ruby>です。',
+                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんと<ruby>奧<rp>(</rp><rt>おく</rt><rp>)</rp></ruby>さんと<ruby>子<rp>(</rp><rt>こ</rt><rp>)</rp></ruby>どもが1<ruby>人<rp>(</rp><rt>ひとり</rt><rp>)</rp></ruby>います。',
+                '<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>の<ruby>夜<rp>(</rp><rt>よる</rt><rp>)</rp></ruby>、いっしょに<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>作<rp>(</rp><rt>つく</rt><rp>)</rp></ruby>って、<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べました。',
+                'ごはんを<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べてから、<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>を<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>ったり、ゲームで<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>んだりしました。',
+                '<ruby>日曜日<rp>(</rp><rt>にちようび</rt><rp>)</rp></ruby>、わたしたちは<ruby>海<rp>(</rp><rt>うみ</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>でしたから、<ruby>人<rp>(</rp><rt>ひと</rt><rp>)</rp></ruby>がたくさんいました。',
+                '<ruby>昼<rp>(</rp><rt>ひる</rt><rp>)</rp></ruby>ごはんはドイツ<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>のレストランで<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べました。',
+                'おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>をたくさん<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べて、おなかがいっぱいになりました。'
+            ],
+            questions: [
+                { q: 'サントスさんは先週の土曜日、どこへ行きましたか。', a: 'サントスさんは友達の田中さんのうちへ行きました。' },
+                { q: '田中さんの家族は何人ですか。', a: '田中さんの家族は3人です。' },
+                { q: '日曜日にどこで昼ごはんを食べましたか。', a: '日曜日にドイツ料理のレストランで昼ごはんを食べました。' }
+            ]
+        },
+        C: {
+            title: '趣味 (サントス)',
+            content: [
+                'わたしの<ruby>趣味<rp>(</rp><rt>しゅみ</rt><rp>)</rp></ruby>は<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ることです。',
+                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>はうちで<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>や<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDを<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ます。',
+                '<ruby>今<rp>(</rp><rt>いま</rt><rp>)</rp></ruby>、わたしはDVDを200<ruby>枚<rp>(</rp><rt>まい</rt><rp>)</rp></ruby>ぐらい<ruby>持<rp>(</rp><rt>も</rt><rp>)</rp></ruby>っています。',
+                'わたしは<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>より<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のほうが<ruby>好<rp>(</rp><rt>す</rt><rp>)</rp></ruby>きですから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rp><rp>)</rp></ruby>のDVDがたくさんあります。',
+                '<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rp><rp>)</rp></ruby>はおもしろいですから、<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>で<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>を<ruby>勉強<rp>(</rp><rt>べんきょう</rt><rp>)</rp></ruby>します。',
+                '<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>が<ruby>少<rp>(</rp><rt>すこ</rp><rp>)</rp></ruby>し<ruby>上手<rp>(</rp><rt>じょうず</rp><rp>)</rp></ruby>になりましたから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rp><rp>)</rp></ruby>って、<ruby>日本人<rp>(</rp><rt>にほんじん</rt><rp>)</rp></ruby>と<ruby>話<rp>(</rp><rt>はな</rt><rp>)</rp></ruby>したり、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>で<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>たりしたいです。'
+            ],
+            questions: [
+                { q: 'サントスさんの趣味は何ですか。', a: 'サントスさんの趣味は映画を見ることです。' },
+                { q: 'サントスさんはDVDを何枚ぐらい持っていますか。', a: 'サントスさんはDVDを200枚ぐらい持っています。' },
+                { q: 'どうしてサントスさんは映画で日本語を勉強しますか。', a: '日本映画はおもしろいですから、サントスさんは映画で日本語を勉強します。' }
+            ]
+        }
+    };
 
-    const personalQuestions = [
-        { q: '〜さんは学生ですか、会社員ですか。', a: 'はい、わたしは学生です。／はい、わたしは会社員です。' },
-        { q: '〜さんのうちはどちらですか。', a: 'わたしのうちは香港です。' },
-        { q: '〜さんの誕生日はいつですか。', a: 'わたしの誕生日は10月24日です。' },
-        { q: '〜さんの休みは何曜日ですか。', a: 'わたしの休みは土曜日と日曜日です。' },
-        { q: 'きのうどこへ行きましたか。', a: 'きのうデパートへ行きました。' },
-        { q: '週末いつも何をしますか。', a: '週末いつも日本語を勉強したり、映画を見たりします。' },
-        { q: 'どこで昼ごはんを食べますか。', a: 'ラーメンやで食べます。' },
-        { q: '去年の誕生日にプレゼントをもらいましたか。', a: 'はい、家族にTシャツをもらいました。' },
-        { q: '飛行機の切符をあげます。どこへ何をしに行きたいですか。', a: '日本へ桜を見に行きたいです。' },
-        { q: '仕事は忙しいですか。', a: 'はい、とても忙しいです。／いいえ、あまり忙しくないです。' },
-        { q: '香港はどんなところですか。', a: '香港はにぎやかなところです。' },
-        { q: '日本語の勉強はどうですか。', a: '日本語の勉強は面白いですが、難しいです。' },
-        { q: 'どうして日本語を勉強しますか。', a: '日本の文化が好きですから、日本語を勉強します。' },
-        { q: 'けさ何か食べましたか。', a: 'はい、パンを食べました。／いいえ、何も食べませんでした。' },
-        { q: '〜さんはスポーツが好きですか。', a: 'はい、好きです。／いいえ、あまり好きじゃないです。' },
-        { q: 'どんな映画が好きですか。', a: 'わたしはエスエフ映画が好きです。' },
-        { q: '〜さんのうちに猫がいますか。', a: 'はい、います。／いいえ、いません。' },
-        { q: 'うちから学校までどのくらいかかりますか。', a: 'うちから学校まで電車で30分ぐらいかかります。' },
-        { q: '〜さんはTシャツが何枚ありますか。', a: 'わたしはTシャツが50枚ぐらいあります。' },
-        { q: '一週間に何回ぐらい日本語を勉強しますか。', a: '一週間に1回ぐらい日本語を勉強します。' },
-        { q: '今までどのくらい日本語を勉強しましたか。', a: '今まで一年ぐらい日本語を勉強しました。' },
-        { q: '〜さんの家族は何人ですか。', a: 'わたしの家族は７人です。両親と兄弟姉妹がいます。' },
-        { q: '犬と猫とどちらが好きですか。', a: 'わたしは猫のほうが好きです。' },
-        { q: '家族でだれがいちばん料理が上手ですか。', a: '家族で母がいちばん料理が上手です。' },
-        { q: '一年でいつがいちばん好きですか。', a: 'わたしは一年で秋がいちばん好きです。（はる／なつ／あき／ふゆ）' },
-        { q: '先週は忙しかったですか。', a: 'はい、先週はとても忙しかったです。' },
-        { q: 'きのうの晩ご飯はどうでしたか。', a: 'きのうの晩ご飯はとてもおいしかったです。' },
-        { q: 'きのうの天気はどうでしたか。', a: 'きのうはいい天気でした。／昨日は雨が降りました。' },
-        { q: '今何がいちばん欲しいですか。', a: '今新しいパソコンがいちばん欲しいです。' },
-        { q: '兄弟がいますか。', a: 'はい、両親と兄弟姉妹がいます。／いいえ、兄弟がいません。' },
-        { q: 'この週末は何をしたいですか。', a: 'この週末は友達と買い物に行きたいです。' },
-        { q: '夏休みに何をいちばんしたいですか。', a: '夏休みに旅行がいちばんしたいです。' },
-        { q: 'どこか旅行に行ったことがありますか。', a: 'はい、ニュージーランドと日本へ行ったことがあります。' },
-        { q: 'この漢字の読み方を教えてください。', a: '（画面の漢字を指して）それは「〇〇」と読みます。' },
-        { q: '今雨が降っていますか。', a: 'はい、降っています。／いいえ、降っていません。' },
-        { q: '日本でいちばん高い山を知っていますか。', a: 'はい、知っています。富士山です。' },
-        { q: '〜さんは働いていますか。', a: 'はい、広告代理店で働いています。' },
-        { q: 'けさ起きてから、何をしましたか。', a: 'けさ起きてから、シャワーを浴びて、朝ごはんを食べました。' },
-        { q: 'この試験が終わってから、何をしますか。', a: 'この試験が終わってから、レストランでご飯を食べます。' },
-        { q: '休みの日は何をしますか。', a: '休みの日はうちで音楽を聴いたり、映画を見たりします。／ポップソングが好きです。エスエフ映画が好きです。' },
-        { q: '日本へ行って、何をしたいですか。', a: '日本へ行って、寿司を食べて、買い物をしたいです。' },
-        { q: '映画を見てから、何をしましたか。', a: '映画を見てから、友達と喫茶店でコーヒーを飲みました。' },
-        { q: '〜さんのうちから空港までどうやって行きますか。', a: 'うちから空港までバスで行きます。' },
-        { q: '海外旅行に何を持って行かなければなりませんか。', a: 'パスポートとお金を持って行かなければなりません。' },
-        { q: '日曜日も働かなければなりませんか。', a: 'いいえ、働かなくてもいいです。' },
-        { q: '〜さんの趣味は何ですか。', a: 'わたしの趣味は映画です。' },
-        { q: '〜さんはピアノを弾くことができますか。', a: 'はい、できます。／いいえ、できません。' },
-        { q: '〜さんは次の誕生日に何をしたいですか。', a: '次の誕生日に家族とレストランで食事をしたいです。' },
-        { q: '馬に乗ったことがありますか。', a: 'はい、あります。／いいえ、一度もありません。' },
-        { q: '毎晩寝るまえに、何をしますか。', a: '毎晩寝るまえに、ゲームで遊びます。' }
-    ];
+    const personalQuestions = [
+        { q: '〜さんは学生ですか、会社員ですか。', a: 'はい、わたしは学生です。／はい、わたしは会社員です。' },
+        { q: '〜さんのうちはどちらですか。', a: 'わたしのうちは香港です。' },
+        { q: '〜さんの誕生日はいつですか。', a: 'わたしの誕生日は10月24日です。' },
+        { q: '〜さんの休みは何曜日ですか。', a: 'わたしの休みは土曜日と日曜日です。' },
+        { q: 'きのうどこへ行きましたか。', a: 'きのうデパートへ行きました。' },
+        { q: '週末いつも何をしますか。', a: '週末いつも日本語を勉強したり、映画を見たりします。' },
+        { q: 'どこで昼ごはんを食べますか。', a: 'ラーメンやで食べます。' },
+        { q: '去年の誕生日にプレゼントをもらいましたか。', a: 'はい、家族にTシャツをもらいました。' },
+        { q: '飛行機の切符をあげます。どこへ何をしに行きたいですか。', a: '日本へ桜を見に行きたいです。' },
+        { q: '仕事は忙しいですか。', a: 'はい、とても忙しいです。／いいえ、あまり忙しくないです。' },
+        { q: '香港はどんなところですか。', a: '香港はにぎやかなところです。' },
+        { q: '日本語の勉強はどうですか。', a: '日本語の勉強は面白いですが、難しいです。' },
+        { q: 'どうして日本語を勉強しますか。', a: '日本の文化が好きですから、日本語を勉強します。' },
+        { q: 'けさ何か食べましたか。', a: 'はい、パンを食べました。／いいえ、何も食べませんでした。' },
+        { q: '〜さんはスポーツが好きですか。', a: 'はい、好きです。／いいえ、あまり好きじゃないです。' },
+        { q: 'どんな映画が好きですか。', a: 'わたしはエスエフ映画が好きです。' },
+        { q: '〜さんのうちに猫がいますか。', a: 'はい、います。／いいえ、いません。' },
+        { q: 'うちから学校までどのくらいかかりますか。', a: 'うちから学校まで電車で30分ぐらいかかります。' },
+        { q: '〜さんはTシャツが何枚ありますか。', a: 'わたしはTシャツが50枚ぐらいあります。' },
+        { q: '一週間に何回ぐらい日本語を勉強しますか。', a: '一週間に1回ぐらい日本語を勉強します。' },
+        { q: '今までどのくらい日本語を勉強しましたか。', a: '今まで一年ぐらい日本語を勉強しました。' },
+        { q: '〜さんの家族は何人ですか。', a: 'わたしの家族は７人です。両親と兄弟姉妹がいます。' },
+        { q: '犬と猫とどちらが好きですか。', a: 'わたしは猫のほうが好きです。' },
+        { q: '家族でだれがいちばん料理が上手ですか。', a: '家族で母がいちばん料理が上手です。' },
+        { q: '一年でいつがいちばん好きですか。', a: 'わたしは一年で秋がいちばん好きです。（はる／なつ／あき／ふゆ）' },
+        { q: '先週は忙しかったですか。', a: 'はい、先週はとても忙しかったです。' },
+        { q: 'きのうの晩ご飯はどうでしたか。', a: 'きのうの晩ご飯はとてもおいしかったです。' },
+        { q: 'きのうの天気はどうでしたか。', a: 'きのうはいい天気でした。／昨日は雨が降りました。' },
+        { q: '今何がいちばん欲しいですか。', a: '今新しいパソコンがいちばん欲しいです。' },
+        { q: '兄弟がいますか。', a: 'はい、両親と兄弟姉妹がいます。／いいえ、兄弟がいません。' },
+        { q: 'この週末は何をしたいですか。', a: 'この週末は友達と買い物に行きたいです。' },
+        { q: '夏休みに何をいちばんしたいですか。', a: '夏休みに旅行がいちばんしたいです。' },
+        { q: 'どこか旅行に行ったことがありますか。', a: 'はい、ニュージーランドと日本へ行ったことがあります。' },
+        { q: 'この漢字の読み方を教えてください。', a: '（画面の漢字を指して）それは「〇〇」と読みます。' },
+        { q: '今雨が降っていますか。', a: 'はい、降っています。／いいえ、降っていません。' },
+        { q: '日本でいちばん高い山を知っていますか。', a: 'はい、知っています。富士山です。' },
+        { q: '〜さんは働いていますか。', a: 'はい、広告代理店で働いています。' },
+        { q: 'けさ起きてから、何をしましたか。', a: 'けさ起きてから、シャワーを浴びて、朝ごはんを食べました。' },
+        { q: 'この試験が終わってから、何をしますか。', a: 'この試験が終わってから、レストランでご飯を食べます。' },
+        { q: '休みの日は何をしますか。', a: '休みの日はうちで音楽を聴いたり、映画を見たりします。／ポップソングが好きです。エスエフ映画が好きです。' },
+        { q: '日本へ行って、何をしたいですか。', a: '日本へ行って、寿司を食べて、買い物をしたいです。' },
+        { q: '映画を見てから、何をしましたか。', a: '映画を見てから、友達と喫茶店でコーヒーを飲みました。' },
+        { q: '〜さんのうちから空港までどうやって行きますか。', a: 'うちから空港までバスで行きます。' },
+        { q: '海外旅行に何を持って行かなければなりませんか。', a: 'パスポートとお金を持って行かなければなりません。' },
+        { q: '日曜日も働かなければなりませんか。', a: 'いいえ、働かなくてもいいです。' },
+        { q: '〜さんの趣味は何ですか。', a: 'わたしの趣味は映画です。' },
+        { q: '〜さんはピアノを弾くことができますか。', a: 'はい、できます。／いいえ、できません。' },
+        { q: '〜さんは次の誕生日に何をしたいですか。', a: '次の誕生日に家族とレストランで食事をしたいです。' },
+        { q: '馬に乗ったことがありますか。', a: 'はい、あります。／いいえ、一度もありません。' },
+        { q: '毎晩寝るまえに、何をしますか。', a: '毎晩寝るまえに、ゲームで遊びます。' }
+    ];
 
     // ==================================================
     // 程式邏輯區 (下方代碼請勿修改)
