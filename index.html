@@ -1,239 +1,227 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日語入門口譯 模擬口試 (增強版v4)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', 'Noto Sans TC', sans-serif;
-        }
-        .jp-text {
-            font-family: 'Noto Sans JP', sans-serif;
-        }
-        [data-step] {
-            display: none;
-        }
-        [data-step].active {
-            display: block;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        ruby {
-            ruby-position: over;
-        }
-        rt, rp {
-            font-size: 0.6em;
-            color: #4a5568;
-            user-select: none;
-            transition: opacity 0.3s, font-size 0.3s;
-        }
-        .furigana-hidden rt,
-        .furigana-hidden rp {
-            opacity: 0;
-            font-size: 0;
-        }
-        .clickable-sentence, .clickable-answer {
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border-radius: 4px;
-        }
-        .clickable-sentence:hover, .clickable-answer:hover {
-            background-color: #e0f2fe;
-        }
-        .standard-answer {
-            font-size: 0.9em;
-            color: #718096; /* gray-500 */
-            transition: opacity 0.3s, max-height 0.3s;
-            overflow: hidden;
-            max-height: 100px;
-        }
-        .answers-hidden .standard-answer {
-            opacity: 0;
-            max-height: 0;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日語入門口譯 模擬口試 (增強版v4)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        .jp-text {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        [data-step] {
+            display: none;
+        }
+        [data-step].active {
+            display: block;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        ruby {
+            ruby-position: over;
+        }
+        rt, rp {
+            font-size: 0.6em;
+            color: #4a5568;
+            user-select: none;
+            transition: opacity 0.3s, font-size 0.3s;
+        }
+        .furigana-hidden rt,
+        .furigana-hidden rp {
+            opacity: 0;
+            font-size: 0;
+        }
+        .clickable-sentence, .clickable-answer {
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .clickable-sentence:hover, .clickable-answer:hover {
+            background-color: #e0f2fe;
+        }
+        .standard-answer {
+            font-size: 0.9em;
+            color: #718096; /* gray-500 */
+            transition: opacity 0.3s, max-height 0.3s;
+            overflow: hidden;
+            max-height: 100px;
+        }
+        .answers-hidden .standard-answer {
+            opacity: 0;
+            max-height: 0;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
-        <header class="text-center mb-6">
-            <h1 class="text-2xl sm:text-3xl font-bold text-sky-800">HKU SPACE 日語入門口譯</h1>
-            <h2 class="text-xl sm:text-2xl font-semibold text-sky-700">日語入門口譯 模擬口試 (增強版v4)</h2>
-        </header>
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
+        <header class="text-center mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-sky-800">HKU SPACE 日語入門口譯</h1>
+            <h2 class="text-xl sm:text-2xl font-semibold text-sky-700">日語入門口譯 模擬口試 (增強版v4)</h2>
+        </header>
 
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-            <div id="progress-bar" class="bg-sky-600 h-2.5 rounded-full" style="width: 0%"></div>
-        </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+            <div id="progress-bar" class="bg-sky-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
 
-        <main id="exam-container" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg relative">
-            
-            <div class="absolute top-4 right-4 flex gap-2">
-                <button id="toggle-furigana-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏振假名">
-                    <!-- Icon will be set by JS -->
-                </button>
-                <button id="toggle-answers-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏答案">
-                    <!-- Icon will be set by JS -->
-                </button>
-            </div>
+        <main id="exam-container" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg relative">
+            
+            <div class="absolute top-4 right-4 flex gap-2">
+                <button id="toggle-furigana-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏振假名">
+                                    </button>
+                <button id="toggle-answers-btn" class="p-2 text-gray-500 hover:text-sky-600 hover:bg-gray-100 rounded-full transition-colors duration-200 hidden" title="顯示/隱藏答案">
+                                    </button>
+            </div>
 
 
-            <!-- Step 1: Introduction -->
-            <div id="step-1" data-step class="active">
-                <h3 class="text-2xl font-bold mb-4 text-gray-700">口試須知</h3>
-                <div class="space-y-3 text-gray-600">
-                    <p>1. 本模擬口試將完整模擬正式考試流程。</p>
-                    <p>2. 考試流程分為：<strong class="text-sky-700">文章朗讀</strong>、<strong class="text-sky-700">文章問答</strong> 及 <strong class="text-sky-700">個人問題</strong>。</p>
-                    <p>3. 系統將根據<strong class="text-sky-700">標準評分模式</strong>為您的表現評分。</p>
-                    <p>4. 請允許瀏覽器使用麥克風權限以進行錄音。</p>
-                </div>
-                 <div class="mt-6">
-                    <label for="user-name" class="block text-sm font-medium text-gray-700">請輸入您的姓名：</label>
-                    <input type="text" id="user-name" value="ティム" class="mt-1 block w-full jp-text p-2 border border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
-                </div>
-                <div id="compatibility-check" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg hidden">
-                    您的瀏覽器不支援語音辨識功能，建議使用最新版本的 Chrome 或 Edge 瀏覽器。
-                </div>
-                <button id="start-exam-btn" class="mt-8 w-full bg-sky-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50">
-                    我已了解，開始考試
-                </button>
-            </div>
+                        <div id="step-1" data-step class="active">
+                <h3 class="text-2xl font-bold mb-4 text-gray-700">口試須知</h3>
+                <div class="space-y-3 text-gray-600">
+                    <p>1. 本模擬口試將完整模擬正式考試流程。</p>
+                    <p>2. 考試流程分為：<strong class="text-sky-700">文章朗讀</strong>、<strong class="text-sky-700">文章問答</strong> 及 <strong class="text-sky-700">個人問題</strong>。</p>
+                    <p>3. 系統將根據<strong class="text-sky-700">標準評分模式</strong>為您的表現評分。</p>
+                    <p>4. 請允許瀏覽器使用麥克風權限以進行錄音。</p>
+                </div>
+                 <div class="mt-6">
+                    <label for="user-name" class="block text-sm font-medium text-gray-700">請輸入您的姓名：</label>
+                    <input type="text" id="user-name" value="ティム" class="mt-1 block w-full jp-text p-2 border border-gray-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
+                </div>
+                <div id="compatibility-check" class="mt-6 p-4 bg-red-100 text-red-700 rounded-lg hidden">
+                    您的瀏覽器不支援語音辨識功能，建議使用最新版本的 Chrome 或 Edge 瀏覽器。
+                </div>
+                <button id="start-exam-btn" class="mt-8 w-full bg-sky-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50">
+                    我已了解，開始考試
+                </button>
+            </div>
 
-            <!-- Step 2: Reading Aloud -->
-            <div id="step-2" data-step>
-                <h3 class="text-2xl font-bold mb-2 text-gray-700">第一部分：文章朗讀</h3>
-                <p class="text-gray-500 mb-4">請朗讀以下所有文章。您需要為每篇文章單獨錄音。</p>
-                <div id="reading-articles-container" class="space-y-8">
-                    <!-- Articles will be injected here -->
-                </div>
-                <div class="mt-8 flex justify-end">
-                    <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
-                </div>
-            </div>
+                        <div id="step-2" data-step>
+                <h3 class="text-2xl font-bold mb-2 text-gray-700">第一部分：文章朗讀</h3>
+                <p class="text-gray-500 mb-4">請朗讀以下所有文章。您需要為每篇文章單獨錄音。</p>
+                <div id="reading-articles-container" class="space-y-8">
+                                    </div>
+                <div class="mt-8 flex justify-end">
+                    <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
+                </div>
+            </div>
 
-            <!-- Step 3: Article Questions -->
-            <div id="step-3" data-step>
-                <h3 class="text-2xl font-bold mb-2 text-gray-700">第二部分：文章問答</h3>
-                <p class="text-gray-500 mb-4">請參考文章，回答下列所有問題。</p>
-                <div id="article-q-container" class="space-y-8">
-                    <!-- Article questions will be injected here -->
-                </div>
-                <div class="mt-8 flex justify-between">
-                    <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
-                    <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
-                </div>
-            </div>
+                        <div id="step-3" data-step>
+                <h3 class="text-2xl font-bold mb-2 text-gray-700">第二部分：文章問答</h3>
+                <p class="text-gray-500 mb-4">請參考文章，回答下列所有問題。</p>
+                <div id="article-q-container" class="space-y-8">
+                                    </div>
+                <div class="mt-8 flex justify-between">
+                    <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
+                    <button onclick="handleNavigation('next')" class="bg-sky-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-sky-700">下一部分 &rarr;</button>
+                </div>
+            </div>
 
-            <!-- Step 4: Personal Questions -->
-            <div id="step-4" data-step>
-                <h3 class="text-2xl font-bold mb-2 text-gray-700">第三部分：個人問題</h3>
-                <p class="text-gray-500 mb-4">導師將提問所有個人問題，請作答。</p>
-                <div id="personal-q-container" class="space-y-6">
-                    <!-- Personal questions will be injected here -->
-                </div>
-                <div class="mt-8 flex justify-between">
-                    <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
-                    <button id="finish-exam-btn" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700">完成考試，查看結果</button>
-                </div>
-            </div>
+                        <div id="step-4" data-step>
+                <h3 class="text-2xl font-bold mb-2 text-gray-700">第三部分：個人問題</h3>
+                <p class="text-gray-500 mb-4">導師將提問所有個人問題，請作答。</p>
+                <div id="personal-q-container" class="space-y-6">
+                                    </div>
+                <div class="mt-8 flex justify-between">
+                    <button onclick="handleNavigation('prev')" class="bg-gray-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-gray-600">&larr; 上一部分</button>
+                    <button id="finish-exam-btn" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700">完成考試，查看結果</button>
+                </div>
+            </div>
 
-            <!-- Step 5: Results -->
-            <div id="step-5" data-step>
-                <h3 class="text-2xl font-bold mb-4 text-gray-700">評分報告</h3>
-                <div id="results-loader" class="hidden flex-col items-center my-8">
-                    <div class="loader"></div>
-                    <p class="mt-4 text-gray-600 text-lg">正在為您評分，請稍候...</p>
-                </div>
-                <div id="results-content">
-                    <div id="results-summary" class="mb-6 p-4 bg-sky-100 rounded-lg text-center">
-                        <p class="text-lg">總分</p>
-                        <p id="total-score" class="text-5xl font-bold text-sky-700"></p>
-                    </div>
-                    <div id="results-details" class="space-y-6">
-                        <!-- Detailed results will be injected here -->
-                    </div>
-                    <button id="restart-exam-btn" class="mt-8 w-full bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
-                        重新開始模擬考試
-                    </button>
-                </div>
-            </div>
-        </main>
-    </div>
+                        <div id="step-5" data-step>
+                <h3 class="text-2xl font-bold mb-4 text-gray-700">評分報告</h3>
+                <div id="results-loader" class="hidden flex-col items-center my-8">
+                    <div class="loader"></div>
+                    <p class="mt-4 text-gray-600 text-lg">正在為您評分，請稍候...</p>
+                </div>
+                <div id="results-content">
+                    <div id="results-summary" class="mb-6 p-4 bg-sky-100 rounded-lg text-center">
+                        <p class="text-lg">總分</p>
+                        <p id="total-score" class="text-5xl font-bold text-sky-700"></p>
+                    </div>
+                    <div id="results-details" class="space-y-6">
+                                            </div>
+                    <button id="restart-exam-btn" class="mt-8 w-full bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                        重新開始模擬考試
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
 
-    <script>
+    <script>
 // ==================================================
-    // 題庫資料區 (未來請在此修改題目和答案)
-    // ==================================================
-    const articles = {
-        A: {
-            title: '旅行 (サントス)',
-            content: [
-                '<ruby>去年<rp>(</rp><rt>きょねん</rt><rp>)</rp></ruby>の<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>、わたしは<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>と<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へスキーに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>は<ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby><ruby>雪<rp>(</rp><rt>ゆき</rt><rp>)</rp></ruby>が<ruby>降<rp>(</rp><rt>ふ</rt><rp>)</rp></ruby>っていました。',
-                '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ3<ruby>回<rp>(</rp><rt>かい</rt><rp>)</rp></ruby><ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>ったことがありますが、<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>は<ruby>初<rp>(</rp><rt>はじ</rt><rp>)</rp></ruby>めてです。',
-                'スキーもしたことがありません。',
-                '1<ruby>週間<rp>(</rp><rt>しゅうかん</rt><rp>)</rp></ruby><ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby>スキーを<ruby>練習<rp>(</rp><rt>れんしゅう</rt><rp>)</rp></ruby>しましたが、なかなか<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりませんでした。',
-                '<ruby>短<rp>(</rp><rt>みじか</rt><rp>)</rp></ruby>い<ruby>旅行<rp>(</rp><rt>りょこう</rt><rp>)</rp></ruby>でしたが、おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べたり、<ruby>買<rp>(</rp><rt>か</rt><rp>)</rp></ruby>い<ruby>物<rp>(</rp><rt>もの</rt><rp>)</rp></ruby>したりしました。',
-                'とても<ruby>楽<rp>(</rp><rt>たの</rt><rp>)</rp></ruby>しかったです。',
-                'ぜひまた<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きたいです。'
-            ],
-            questions: [
-                { q: 'サントスさんはいつ北海道へ行きましたか。', a: 'サントスさんは去年の冬、北海道へ行きました。' },
-                { q: 'サントスさんは何回スキーをしたことがありますか。', a: 'サントスさんはスキーをしたことがありません。' },
-                { q: '旅行で何をしましたか。', a: 'サントスさんはおいしい料理を食べたり、買い物をしたりしました。' }
-            ]
-        },
-        B: {
-            title: '週末 (サントス)',
-            content: [
-                'わたしは<ruby>先週<rp>(</rp><rt>せんしゅう</rt><rp>)</rp></ruby>の<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>、<ruby>友達<rp>(</rp><rt>ともだち</rt><rp>)</rp></ruby>の<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんのおうちへ<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>びに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんの<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>は3<ruby>人<rp>(</rp><rt>にん</rt><rp>)</rp></ruby>です。',
-                '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さん<ruby>母親<rp>(</rp><rt>ははおや</rt><rp>)</rp></ruby>と<ruby>子<rp>(</rp><rt>こ</rt><rp>)</rp></ruby>どもが1<ruby>人<rp>(</rp><rt>り</rt><rp>)</rp></ruby>います。',
-                '<ruby>土曜日<rp>(</rp><rt>どようび</rp><rp>)</rp></ruby>の<ruby>夜<rp>(</rp><rt>よる</rt><rp>)</rp></ruby>、いっしょに<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>作<rp>(</rp><rt>つく</rp><rp>)</rp></ruby>って、<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べました。',
-                'ごはんを<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べてから、<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>を<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>ったり、ゲームで<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>んだりしました。',
-                '<ruby>日曜日<rp>(</rp><rt>にちようび</rp><rp>)</rp></ruby>、わたしたちは<ruby>海<rp>(</rp><rt>うみ</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
-                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>でしたから、<ruby>人<rp>(</rp><rt>ひと</rt><rp>)</rp></ruby>がたくさんいました。',
-                '<ruby>昼<rp>(</rp><rt>ひる</rt><rp>)</rp></ruby>ごはんはドイツ<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>のレストランで<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べました。',
-                'おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>をたくさん<ruby>食<rp>(</rp><rt>た</rp><rp>)</rp></ruby>べて、おなかがいっぱいになりました。'
-            ],
-            questions: [
-                { q: 'サントスさんは先週の土曜日、どこへ行きましたか。', a: 'サントスさんは友達の田中さんのうちへ行きました。' },
-                { q: '田中さんの家族は何人ですか。', a: '田中さんの家族は3人です。' },
-                { q: '日曜日にどこで昼ごはんを食べましたか。', a: '日曜日にドイツ料理のレストランで昼ごはんを食べました。' }
-            ]
-        },
-        C: {
-            title: '趣味 (サントス)',
-            content: [
-                'わたしの<ruby>趣味<rp>(</rp><rt>しゅみ</rt><rp>)</rp></ruby>は<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ることです。',
-                '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>はうちで<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>や<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDを<ruby>見<rp>(</rp><rt>み</rp><rp>)</rp></ruby>ます。',
-                '<ruby>今<rp>(</rp><rt>いま</rt><rp>)</rp></ruby>、わたしはDVDを200<ruby>枚<rp>(</rp><rt>まい</rt><rp>)</rp></ruby>ぐらい<ruby>持<rp>(</rp><rt>も</rt><rp>)</rp></ruby>っています。',
-                'わたしは<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>より<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のほうが<ruby>好<rp>(</rp><rt>す</rt><rp>)</rp></ruby>きですから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDがたくさんあります。',
-                '<ruby>日本<rp>(</rp><rt>にほん</rp><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>はおもしろいですから、<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>で<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>を<ruby>勉強<rp>(</rp><rt>べんきょう</rt><rp>)</rp></ruby>します。',
-                '<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>が<ruby>少<rp>(</rp><rt>すこ</rt><rp>)</rp></ruby>し<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりましたから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>って、<ruby>日本人<rp>(</rp><rt>にほんじん</rt><rp>)</rp></ruby>と<ruby>話<rp>(</rp><rt>はな</rt><rp>)</rp></ruby>したい、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>で<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>たいです。'
-            ],
-            questions: [
-                { q: 'サントスさんの趣味は何ですか。', a: 'サントスさんの趣味は映画を見ることです。' },
-                { q: 'サントスさんはDVDを何枚ぐらい持っていますか。', a: 'サントスさんはDVDを200枚ぐらい持っています。' },
-                { q: 'どうしてサントスさんは映画で日本語を勉強しますか。', a: '日本映画はおもしろいですから、サントスさんは映画で日本語を勉強します。' }
-            ]
-        }
-    };
+// 題庫資料區 (未來請在此修改題目和答案)
+// ==================================================
+const articles = {
+    A: {
+        title: '旅行 (サントス)',
+        content: [
+            '<ruby>去年<rp>(</rp><rt>きょねん</rt><rp>)</rp></ruby>の<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>、わたしは<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>と<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へスキーに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+            '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>は<ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby><ruby>雪<rp>(</rp><rt>ゆき</rt><rp>)</rp></ruby>が<ruby>降<rp>(</rp><rt>ふ</rt><rp>)</rp></ruby>っていました。',
+            '<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ3<ruby>回<rp>(</rp><rt>かい</rt><rp>)</rp></ruby><ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>ったことがありますが、<ruby>冬<rp>(</rp><rt>ふゆ</rt><rp>)</rp></ruby>は<ruby>初<rp>(</rp><rt>はじ</rt><rp>)</rp></ruby>めてです。',
+            'スキーもしたことがありません。',
+            '1<ruby>週間<rp>(</rp><rt>しゅうかん</rt><rp>)</rp></ruby><ruby>毎日<rp>(</rp><rt>まいにち</rt><rp>)</rp></ruby>スキーを<ruby>練習<rp>(</rp><rt>れんしゅう</rt><rp>)</rp></ruby>しましたが、なかなか<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりませんでした。',
+            '<ruby>短<rp>(</rp><rt>みじか</rt><rp>)</rp></ruby>い<ruby>旅行<rp>(</rp><rt>りょこう</rt><rp>)</rp></ruby>でしたが、おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べたり、<ruby>買<rp>(</rp><rt>か</rt><rp>)</rp></ruby>い<ruby>物<rp>(</rp><rt>もの</rt><rp>)</rp></ruby>したりしました。',
+            'とても<ruby>楽<rp>(</rp><rt>たの</rt><rp>)</rp></ruby>しかったです。',
+            'ぜひまた<ruby>北海道<rp>(</rp><rt>ほっかいどう</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きたいです。'
+        ],
+        questions: [
+            { q: 'サントスさんはいつ北海道へ行きましたか。', a: 'サントスさんは去年の冬、北海道へ行きました。' },
+            { q: 'サントスさんは何回スキーをしたことがありますか。', a: 'サントスさんはスキーをしたことがありません。' },
+            { q: '旅行で何をしましたか。', a: 'サントスさんはおいしい料理を食べたり、買い物をしたりしました。' }
+        ]
+    },
+    B: { // <-- MODIFIED
+        title: '週末 (サントス)',
+        content: [
+            'わたしは<ruby>先週<rp>(</rp><rt>せんしゅう</rt><rp>)</rp></ruby>の<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>、<ruby>友達<rp>(</rp><rt>ともだち</rt><rp>)</rp></ruby>の<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんのうちへ<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>びに<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+            '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんの<ruby>家族<rp>(</rp><rt>かぞく</rt><rp>)</rp></ruby>は3<ruby>人<rp>(</rp><rt>にん</rt><rp>)</rp></ruby>です。',
+            '<ruby>田中<rp>(</rp><rt>たなか</rt><rp>)</rp></ruby>さんと<ruby>奥<rp>(</rp><rt>おく</rt><rp>)</rp></ruby>さんと<ruby>子<rp>(</rp><rt>こ</rt><rp>)</rp></ruby>どもが1<ruby>人<rp>(</rp><rt>ひとり</rt><rp>)</rp></ruby>います。',
+            '<ruby>土曜日<rp>(</rp><rt>どようび</rt><rp>)</rp></ruby>の<ruby>夜<rp>(</rp><rt>よる</rt><rp>)</rp></ruby>、いっしょに<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>を<ruby>作<rp>(</rp><rt>つく</rt><rp>)</rp></ruby>って、<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べました。',
+            'ごはんを<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べてから、<ruby>歌<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>を<rp>(</rp><rt>うた</rt><rp>)</rp></ruby>ったり、ゲームで<ruby>遊<rp>(</rp><rt>あそ</rt><rp>)</rp></ruby>んだりしました。',
+            '<ruby>日曜日<rp>(</rp><rt>にちようび</rt><rp>)</rp></ruby>、わたしたちは<ruby>海<rp>(</rp><rt>うみ</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>きました。',
+            '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>でしたから、<ruby>人<rp>(</rp><rt>ひと</rt><rp>)</rp></ruby>がたくさんいました。',
+            '<ruby>昼<rp>(</rp><rt>ひる</rt><rp>)</rp></ruby>ごはんはドイツ<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>のレストランで<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べました。',
+            'おいしい<ruby>料理<rp>(</rp><rt>りょうり</rt><rp>)</rp></ruby>をたくさん<ruby>食<rp>(</rp><rt>た</rt><rp>)</rp></ruby>べて、おなかがいっぱいになりました。'
+        ],
+        questions: [
+            { q: 'サントスさんは先週の土曜日、どこへ行きましたか。', a: 'サントスさんは友達の田中さんのうちへ行きました。' },
+            { q: '田中さんの家族は何人ですか。', a: '田中さんの家族は3人です。' },
+            { q: '日曜日にどこで昼ごはんを食べましたか。', a: '日曜日にドイツ料理のレストランで昼ごはんを食べました。' }
+        ]
+    },
+    C: { // <-- MODIFIED
+        title: '趣味 (サントス)',
+        content: [
+            'わたしの<ruby>趣味<rp>(</rp><rt>しゅみ</rt><rp>)</rp></ruby>は<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ることです。',
+            '<ruby>週末<rp>(</rp><rt>しゅうまつ</rt><rp>)</rp></ruby>はうちで<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>や<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDを<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>ます。',
+            '<ruby>今<rp>(</rp><rt>いま</rt><rp>)</rp></ruby>、わたしはDVDを200<ruby>枚<rp>(</rp><rt>まい</rt><rp>)</rp></ruby>ぐらい<ruby>持<rp>(</rp><rt>も</rt><rp>)</rp></ruby>っています。',
+            'わたしは<ruby>香港<rp>(</rp><rt>ほんこん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>より<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のほうが<ruby>好<rp>(</rp><rt>す</rt><rp>)</rp></ruby>きですから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>のDVDがたくさんあります。',
+            '<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby><ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>はおもしろいですから、<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>で<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>を<ruby>勉強<rp>(</rp><rt>べんきょう</rt><rp>)</rp></ruby>します。',
+            '<ruby>日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp></ruby>が<ruby>少<rp>(</rp><rt>すこ</rt><rp>)</rp></ruby>し<ruby>上手<rp>(</rp><rt>じょうず</rt><rp>)</rp></ruby>になりましたから、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>へ<ruby>行<rp>(</rp><rt>い</rt><rp>)</rp></ruby>って、<ruby>日本人<rp>(</rp><rt>にほんじん</rt><rp>)</rp></ruby>と<ruby>話<rp>(</rp><rt>はな</rt><rp>)</rp></ruby>したり、<ruby>日本<rp>(</rp><rt>にほん</rt><rp>)</rp></ruby>で<ruby>映画<rp>(</rp><rt>えいが</rt><rp>)</rp></ruby>を<ruby>見<rp>(</rp><rt>み</rt><rp>)</rp></ruby>たりしたいです。'
+        ],
+        questions: [
+            { q: 'サントスさんの趣味は何ですか。', a: 'サントスさんの趣味は映画を見ることです。' },
+            { q: 'サントスさんはDVDを何枚ぐらい持っていますか。', a: 'サントスさんはDVDを200枚ぐらい持っています。' },
+            { q: 'どうしてサントスさんは映画で日本語を勉強しますか。', a: '日本映画はおもしろいですから、サントスさんは映画で日本語を勉強します。' }
+        ]
+    }
+};
 
     const personalQuestions = [
         { q: '〜さんは学生ですか、会社員ですか。', a: 'はい、わたしは学生です。／はい、わたしは会社員です。' },
@@ -263,7 +251,7 @@
         { q: '一年でいつがいちばん好きですか。', a: 'わたしは一年で秋がいちばん好きです。（はる／なつ／あき／ふゆ）' },
         { q: '先週は忙しかったですか。', a: 'はい、先週はとても忙しかったです。' },
         { q: 'きのうの晩ご飯はどうでしたか。', a: 'きのうの晩ご飯はとてもおいしかったです。' },
-        { q: 'きのうの天気はどうでしたか。', a: 'きのうはいい天気でした。／昨日は雨が降りました。' },
+        { q: 'きのうの天気はどうでしたか。', a: 'きのうはいい天気でした。／きのうは雨が降りました。' },
         { q: '今何がいちばん欲しいですか。', a: '今新しいパソコンがいちばん欲しいです。' },
         { q: '兄弟がいますか。', a: 'はい、両親と兄弟姉妹がいます。／いいえ、兄弟がいません。' },
         { q: 'この週末は何をしたいですか。', a: 'この週末は友達と買い物に行きたいです。' },
@@ -288,438 +276,297 @@
         { q: '毎晩寝るまえに、何をしますか。', a: '毎晩寝るまえに、ゲームで遊びます。' }
     ];
 
-    // ==================================================
-    // 程式邏輯區 (下方代碼請勿修改)
-    // ==================================================
+    // ==================================================
+    // 程式邏輯區 (下方代碼請勿修改)
+    // ==================================================
 
-    // --- STATE ---
-    let currentStep = 1;
-    let userName = 'ティム';
-    let readingTranscripts = {};
-    let articleQuestionTranscripts = {};
-    let personalQuestionTranscripts = {};
-    let isAnswersVisible = false;
-    let isFuriganaVisible = true;
-    let japaneseVoice = null;
+    // --- STATE ---
+    let currentStep = 1;
+    let userName = 'ティム';
+    let readingTranscripts = {};
+    let articleQuestionTranscripts = {};
+    let personalQuestionTranscripts = {};
+    let isAnswersVisible = false;
+    let isFuriganaVisible = true;
+    let japaneseVoice = null;
 
-    // --- SPEECH API ---
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let recognition;
-    let isCompatible = !!SpeechRecognition;
+    // --- SPEECH API ---
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition;
+    let isCompatible = !!SpeechRecognition;
 
-    if (isCompatible) {
-        recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.lang = 'ja-JP';
-        recognition.interimResults = true;
-    }
+    if (isCompatible) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = true;
+    }
 
-    // --- DOM ELEMENTS ---
-    const mainContainer = document.getElementById('exam-container');
-    const toggleAnswersBtn = document.getElementById('toggle-answers-btn');
-    const toggleFuriganaBtn = document.getElementById('toggle-furigana-btn');
-    const progressBar = document.getElementById('progress-bar');
-    const steps = document.querySelectorAll('[data-step]');
-    const startExamBtn = document.getElementById('start-exam-btn');
-    const compatibilityCheck = document.getElementById('compatibility-check');
-    const userNameInput = document.getElementById('user-name');
-    
-    const readingArticlesContainer = document.getElementById('reading-articles-container');
-    const articleQContainer = document.getElementById('article-q-container');
-    const personalQContainer = document.getElementById('personal-q-container');
-    
-    const finishExamBtn = document.getElementById('finish-exam-btn');
-    const resultsLoader = document.getElementById('results-loader');
-    const resultsContent = document.getElementById('results-content');
-    const totalScoreEl = document.getElementById('total-score');
-    const resultsDetails = document.getElementById('results-details');
-    const restartExamBtn = document.getElementById('restart-exam-btn');
+    // --- DOM ELEMENTS ---
+    const mainContainer = document.getElementById('exam-container');
+    const toggleAnswersBtn = document.getElementById('toggle-answers-btn');
+    const toggleFuriganaBtn = document.getElementById('toggle-furigana-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const steps = document.querySelectorAll('[data-step]');
+    const startExamBtn = document.getElementById('start-exam-btn');
+    const compatibilityCheck = document.getElementById('compatibility-check');
+    const userNameInput = document.getElementById('user-name');
+    
+    const readingArticlesContainer = document.getElementById('reading-articles-container');
+    const articleQContainer = document.getElementById('article-q-container');
+    const personalQContainer = document.getElementById('personal-q-container');
+    
+    const finishExamBtn = document.getElementById('finish-exam-btn');
+    const resultsLoader = document.getElementById('results-loader');
+    const resultsContent = document.getElementById('results-content');
+    const totalScoreEl = document.getElementById('total-score');
+    const resultsDetails = document.getElementById('results-details');
+    const restartExamBtn = document.getElementById('restart-exam-btn');
 
-    // --- FUNCTIONS ---
+    // --- FUNCTIONS ---
 
-    function loadJapaneseVoice() {
-        if (japaneseVoice) return;
-        const voices = window.speechSynthesis.getVoices();
-        japaneseVoice = voices.find(voice => voice.lang === 'ja-JP');
-        if (!japaneseVoice) console.warn("Japanese voice not found. Using default.");
-    }
-    
-    function updateProgress() {
-        const progressPercentage = ((currentStep - 1) / 4) * 100;
-        progressBar.style.width = `${progressPercentage}%`;
-    }
+    function loadJapaneseVoice() {
+        if (japaneseVoice) return;
+        const voices = window.speechSynthesis.getVoices();
+        japaneseVoice = voices.find(voice => voice.lang === 'ja-JP');
+        if (!japaneseVoice) console.warn("Japanese voice not found. Using default.");
+    }
+    
+    function updateProgress() {
+        const progressPercentage = ((currentStep - 1) / 4) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+    }
 
-    function handleNavigation(direction) {
-        if (direction === 'next' && currentStep < 5) {
-            goToStep(currentStep + 1);
-        } else if (direction === 'prev' && currentStep > 1) {
-            goToStep(currentStep - 1);
-        }
-    }
+    function handleNavigation(direction) {
+        if (direction === 'next' && currentStep < 5) {
+            goToStep(currentStep + 1);
+        } else if (direction === 'prev' && currentStep > 1) {
+            goToStep(currentStep - 1);
+        }
+    }
 
-    function goToStep(stepNumber) {
-        currentStep = stepNumber;
-        steps.forEach(step => {
-            step.classList.toggle('active', parseInt(step.id.split('-')[1]) === currentStep);
-        });
+    function goToStep(stepNumber) {
+        currentStep = stepNumber;
+        steps.forEach(step => {
+            step.classList.toggle('active', parseInt(step.id.split('-')[1]) === currentStep);
+        });
 
-        const showToggleButtons = currentStep >= 2 && currentStep <= 4;
-        toggleAnswersBtn.classList.toggle('hidden', !showToggleButtons);
-        toggleFuriganaBtn.classList.toggle('hidden', !showToggleButtons);
+        const showToggleButtons = currentStep >= 2 && currentStep <= 4;
+        toggleAnswersBtn.classList.toggle('hidden', !showToggleButtons);
+        toggleFuriganaBtn.classList.toggle('hidden', !showToggleButtons);
 
-        updateProgress();
-    }
+        updateProgress();
+    }
 
-    function speak(text) {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            loadJapaneseVoice();
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = text;
-            const clone = tempDiv.cloneNode(true);
-            clone.querySelectorAll('rt, rp').forEach(el => el.remove());
-            const cleanText = clone.textContent || '';
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = 'ja-JP';
-            utterance.rate = 0.9;
-            if (japaneseVoice) utterance.voice = japaneseVoice;
-            window.speechSynthesis.speak(utterance);
-        } else {
-            console.error('Browser does not support Speech Synthesis.');
-        }
-    }
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            loadJapaneseVoice();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = text;
+            const clone = tempDiv.cloneNode(true);
+            clone.querySelectorAll('rt, rp').forEach(el => el.remove());
+            const cleanText = clone.textContent || '';
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.9;
+            if (japaneseVoice) utterance.voice = japaneseVoice;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.error('Browser does not support Speech Synthesis.');
+        }
+    }
 
-    function startRecognition(onResultCallback, onEndCallback) {
-        if (!isCompatible) return;
-        try { recognition.abort(); } catch(e) {}
-        let finalTranscript = '';
-        recognition.onresult = (event) => {
-            let interimTranscript = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
-                else interimTranscript += event.results[i][0].transcript;
-            }
-            onResultCallback(finalTranscript + interimTranscript);
-        };
-        recognition.onend = () => onEndCallback(finalTranscript);
-        recognition.start();
-    }
+    function startRecognition(onResultCallback, onEndCallback) {
+        if (!isCompatible) return;
+        try { recognition.abort(); } catch(e) {}
+        let finalTranscript = '';
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
+                else interimTranscript += event.results[i][0].transcript;
+            }
+            onResultCallback(finalTranscript + interimTranscript);
+        };
+        recognition.onend = () => onEndCallback(finalTranscript);
+        recognition.start();
+    }
 
-    function stopRecognition() {
-        if (recognition) recognition.stop();
-    }
+    function stopRecognition() {
+        if (recognition) recognition.stop();
+  _B_`
+        btn.classList.replace('hover:bg-red-700', 'hover:bg-yellow-600');
+        
+        const loader = document.getElementById(`${type}-loader-${index}`);
+        const transcriptEl = document.getElementById(`${type}-transcript-${index}`);
+        loader.classList.remove('hidden');
+        transcriptEl.textContent = '';
 
-    function updateToggleButton(btn, isVisible, icons) {
-        btn.innerHTML = isVisible ? icons.visible : icons.hidden;
-    }
+        startRecognition(
+            (interim) => { transcriptEl.textContent = interim; },
+            (final) => {
+                transcriptEl.textContent = final || '(未辨識到語音)';
+                if (type === 'reading') readingTranscripts[index] = final;
+                else if (type === 'article') articleQuestionTranscripts[index] = final;
+                else personalQuestionTranscripts[index] = final;
+                resetRecordButton(btn);
+            }
+        );
+    }
 
-    function initExam() {
-        currentStep = 1;
-        userName = 'ティム';
-        userNameInput.value = userName;
-        readingTranscripts = {};
-        articleQuestionTranscripts = {};
-        personalQuestionTranscripts = {};
-        
-        isAnswersVisible = false;
-        mainContainer.classList.add('answers-hidden');
-        updateToggleButton(toggleAnswersBtn, isAnswersVisible, {
-            visible: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.866 3.866m1.212 1.212L12 12" /></svg>`,
-            hidden: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.057 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`
-        });
+    function resetRecordButton(btn) {
+        const type = btn.dataset.type;
+        const index = parseInt(btn.dataset.index);
+        btn.dataset.recording = 'false';
+        btn.innerHTML = '重新錄音';
+        btn.classList.replace('bg-yellow-500', 'bg-red-600');
+        btn.classList.replace('hover:bg-yellow-600', 'hover:bg-red-700');
+        document.getElementById(`${type}-loader-${index}`).classList.add('hidden');
+    }
+    
+    function calculateAndDisplayResults() {
+        goToStep(5);
+        resultsContent.style.display = 'none';
+        resultsLoader.classList.remove('hidden');
 
-        isFuriganaVisible = true;
-        mainContainer.classList.remove('furigana-hidden');
-        updateToggleButton(toggleFuriganaBtn, isFuriganaVisible, {
-            visible: 'Aあ',
-            hidden: 'A'
-        });
-        toggleFuriganaBtn.classList.add('jp-text', 'font-bold');
+        setTimeout(() => {
+            // Reading Score (20%)
+            let totalSimilarity = 0;
+            const articleKeys = Object.keys(articles);
+            articleKeys.forEach((key, index) => {
+                const originalText = articles[key].content.join('').replace(/<[^>]+>/g, '').replace(/\s/g, '');
+                const transcript = (readingTranscripts[index] || '').replace(/\s/g, '');
+                totalSimilarity += stringSimilarity(originalText, transcript);
+            });
+            const avgSimilarity = articleKeys.length > 0 ? totalSimilarity / articleKeys.length : 0;
+            const readingScore = Math.round(avgSimilarity * 20);
 
+            // Article Question Score (30%)
+            let totalArticleQScore = 0;
+            const totalArticleQuestions = 9;
+            for(let i=0; i<totalArticleQuestions; i++) {
+                totalArticleQScore += calculateIndividualQuestionScore(articleQuestionTranscripts[i] || '');
+            }
+            const articleQScore = Math.round((totalArticleQScore / totalArticleQuestions) * 30);
 
-        renderReadingArticles();
-        renderArticleQuestions();
-        renderPersonalQuestions();
-        
-        resultsLoader.classList.add('hidden');
-        resultsContent.style.display = 'none';
+            // Personal Question Score (50%)
+            let totalPersonalQScore = 0;
+            const totalPersonalQuestions = personalQuestions.length;
+             for(let i=0; i<totalPersonalQuestions; i++) {
+                totalPersonalQScore += calculateIndividualQuestionScore(personalQuestionTranscripts[i] || '');
+            }
+            const personalQScore = Math.round((totalPersonalQScore / totalPersonalQuestions) * 50);
 
-        goToStep(1);
-    }
-    
-    function createClickableSentences(contentArray) {
-        let html = '';
-        contentArray.forEach(sentenceHTML => {
-            const parts = sentenceHTML.split(/([、。])/g);
-            for (let i = 0; i < parts.length; i += 2) {
-                const textPart = parts[i];
-                const delimiter = parts[i + 1] || '';
-                if (textPart || delimiter) {
-                    const combined = textPart + delimiter;
-                    html += `<span class="clickable-sentence" onclick="speak('${combined.replace(/'/g, "\\'")}');">${combined}</span>`;
-                }
-            }
-        });
-        return html;
-    }
+            const totalScore = readingScore + articleQScore + personalQScore;
+            
+            totalScoreEl.textContent = `${totalScore} / 100`;
+            
+            resultsDetails.innerHTML = `
+                ${createResultCard('朗讀 (20%)', readingScore, 20, '根據發音準確度評分。')}
+                ${createResultCard('文章問答 (30%)', articleQScore, 30, '根據回答完整度評分。')}
+                ${createResultCard('個人問題 (50%)', personalQScore, 50, '根據回答完整度評分。')}
+            `;
 
-    function renderReadingArticles() {
-        readingArticlesContainer.innerHTML = '';
-        Object.keys(articles).forEach((key, index) => {
-            const article = articles[key];
-            const clickableContent = createClickableSentences(article.content);
-            readingArticlesContainer.innerHTML += `
-                <div class="p-4 border rounded-lg">
-                    <h4 class="text-xl font-semibold mb-2 jp-text">${article.title}</h4>
-                    <div class="text-lg leading-relaxed jp-text mb-4">${clickableContent}</div>
-                    <div class="flex items-center justify-between flex-wrap gap-2">
-                        <button onclick="speak('${article.content.join(' ').replace(/'/g, "\\'")}')" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">播放全文</button>
-                    </div>
-                    <button data-type="reading" data-index="${index}" class="record-btn mt-3 w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700">開始錄音</button>
-                    <div id="reading-loader-${index}" class="mt-2 hidden flex items-center"><div class="loader !w-5 !h-5"></div><p class="ml-2 text-gray-500">辨識中...</p></div>
-                    <p id="reading-transcript-${index}" class="mt-3 p-2 bg-gray-100 rounded-md min-h-[40px] jp-text"></p>
-                </div>
-            `;
-        });
-    }
+            resultsLoader.classList.add('hidden');
+            resultsContent.style.display = 'block';
+        }, 500); 
+    }
 
-    function renderArticleQuestions() {
-        articleQContainer.innerHTML = '';
-        let globalQIndex = 0;
-        Object.keys(articles).forEach(key => {
-            const article = articles[key];
-            const questionsHTML = article.questions.map((q_obj) => {
-                articleQuestionTranscripts[globalQIndex] = '';
-                const html = createQuestionHTML(q_obj.q, q_obj.a, globalQIndex, 'article');
-                globalQIndex++;
-                return html;
-            }).join('');
+    function calculateIndividualQuestionScore(transcript) {
+        const words = (transcript || '').split(' ').filter(w => w.length > 0);
+        if (!transcript || transcript === '(未辨識到語音)') return 0;
+        if (words.length <= 2) return 0.4;
+        if (words.length <= 4) return 0.6;
+        if (words.length <= 7) return 0.8;
+        return 1.0;
+    }
 
-            articleQContainer.innerHTML += `
-                <div class="p-4 border-t first:border-t-0">
-                    <h4 class="text-xl font-semibold mb-2 jp-text">${article.title}</h4>
-                    <div class="text-base jp-text p-3 bg-gray-50 rounded-md mb-4">${article.content.join(' ')}</div>
-                    <div class="space-y-6">${questionsHTML}</div>
-                </div>
-            `;
-        });
-    }
+    function stringSimilarity(s1, s2) {
+        let longer = s1, shorter = s2;
+        if (s1.length < s2.length) { longer = s2; shorter = s1; }
+        if (longer.length === 0) return 1.0;
+        return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
+    }
 
-    function renderPersonalQuestions() {
-        personalQContainer.innerHTML = '';
-        personalQContainer.innerHTML = personalQuestions.map((q_obj, index) => {
-            personalQuestionTranscripts[index] = '';
-            return createQuestionHTML(q_obj.q, q_obj.a, index, 'personal');
-        }).join('');
-    }
+    function editDistance(s1, s2) {
+        s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
+        const costs = [];
+        for (let i = 0; i <= s1.length; i++) {
+            let lastValue = i;
+            for (let j = 0; j <= s2.length; j++) {
+                if (i === 0) costs[j] = j;
+                else if (j > 0) {
+                    let newValue = costs[j - 1];
+                    if (s1.charAt(i - 1) !== s2.charAt(j - 1))
+                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+            if (i > 0) costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
 
-    function createQuestionHTML(question, answer, index, type) {
-        let processedQuestion = question.replace(/〜さん/g, `${userName}さん`);
-        return `
-            <div class="p-4 border rounded-lg">
-                <p class="jp-text text-lg mb-3"><strong>問題 ${type === 'article' ? index + 1 : index + 1}:</strong> ${processedQuestion}</p>
-                <div class="flex flex-col sm:flex-row gap-2">
-                    <button onclick="speak('${processedQuestion.replace(/'/g, "\\'")}')" class="flex-shrink-0 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600">播放問題</button>
-                    <button data-recording="false" data-type="${type}" data-index="${index}" class="record-btn flex-shrink-0 bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700">開始錄音</button>
-                </div>
-                <div id="${type}-loader-${index}" class="mt-2 hidden flex items-center"><div class="loader !w-5 !h-5"></div><p class="ml-2 text-gray-500">辨識中...</p></div>
-                <p id="${type}-transcript-${index}" class="mt-3 p-2 bg-gray-100 rounded-md min-h-[40px] jp-text"></p>
-                <div class="standard-answer mt-2">
-                    <p class="jp-text"><strong>標準答案：</strong><span class="clickable-answer" onclick="speak('${answer.replace(/'/g, "\\'")}');">${answer}</span></p>
-                </div>
-            </div>
-        `;
-    }
-    
-    function handleRecording(btn) {
-        const type = btn.dataset.type;
-        const index = parseInt(btn.dataset.index);
-        const isRecording = btn.dataset.recording === 'true';
-        
-        if (isRecording) {
-            stopRecognition();
-            return;
-        }
+    function createResultCard(title, score, maxScore, feedback) {
+        return `
+            <div class="p-4 border rounded-lg shadow-sm">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-xl font-bold text-gray-700">${title}</h4>
+                    <p class="text-2xl font-bold text-sky-600">${score} <span class="text-lg text-gray-500">/ ${maxScore}</span></p>
+                </div>
+                <p class="mt-2 text-gray-600"><strong>評語:</strong> ${feedback}</p>
+            </div>
+        `;
+    }
 
-        document.querySelectorAll('.record-btn[data-recording="true"]').forEach(activeBtn => {
-            stopRecognition();
-            resetRecordButton(activeBtn);
-        });
+    // --- EVENT LISTENERS ---
+    window.addEventListener('load', () => {
+        if (!isCompatible) {
+            compatibilityCheck.classList.remove('hidden');
+            startExamBtn.disabled = true;
+        }
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadJapaneseVoice;
+        }
+        initExam();
+    });
 
-        btn.dataset.recording = 'true';
-        btn.innerHTML = `停止錄音`;
-        btn.classList.replace('bg-red-600', 'bg-yellow-500');
-        btn.classList.replace('hover:bg-red-700', 'hover:bg-yellow-600');
-        
-        const loader = document.getElementById(`${type}-loader-${index}`);
-        const transcriptEl = document.getElementById(`${type}-transcript-${index}`);
-        loader.classList.remove('hidden');
-        transcriptEl.textContent = '';
+    userNameInput.addEventListener('input', (e) => {
+        userName = e.target.value.trim() || 'ティム';
+        renderArticleQuestions();
+        renderPersonalQuestions();
+    });
 
-        startRecognition(
-            (interim) => { transcriptEl.textContent = interim; },
-            (final) => {
-                transcriptEl.textContent = final || '(未辨識到語音)';
-                if (type === 'reading') readingTranscripts[index] = final;
-                else if (type === 'article') articleQuestionTranscripts[index] = final;
-                else personalQuestionTranscripts[index] = final;
-                resetRecordButton(btn);
-            }
-        );
-    }
+    startExamBtn.addEventListener('click', () => goToStep(2));
 
-    function resetRecordButton(btn) {
-        const type = btn.dataset.type;
-        const index = parseInt(btn.dataset.index);
-        btn.dataset.recording = 'false';
-        btn.innerHTML = '重新錄音';
-        btn.classList.replace('bg-yellow-500', 'bg-red-600');
-        btn.classList.replace('hover:bg-yellow-600', 'hover:bg-red-700');
-        document.getElementById(`${type}-loader-${index}`).classList.add('hidden');
-    }
-    
-    function calculateAndDisplayResults() {
-        goToStep(5);
-        resultsContent.style.display = 'none';
-        resultsLoader.classList.remove('hidden');
+    toggleAnswersBtn.addEventListener('click', () => {
+        isAnswersVisible = !isAnswersVisible;
+        mainContainer.classList.toggle('answers-hidden');
+        updateToggleButton(toggleAnswersBtn, isAnswersVisible, {
+            visible: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.866 3.866m1.212 1.212L12 12" /></svg>`,
+            hidden: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.057 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`
+        });
+    });
+    
+    toggleFuriganaBtn.addEventListener('click', () => {
+        isFuriganaVisible = !isFuriganaVisible;
+        mainContainer.classList.toggle('furigana-hidden');
+        updateToggleButton(toggleFuriganaBtn, isFuriganaVisible, {
+            visible: 'Aあ',
+            hidden: 'A'
+        });
+    });
 
-        setTimeout(() => {
-            // Reading Score (20%)
-            let totalSimilarity = 0;
-            const articleKeys = Object.keys(articles);
-            articleKeys.forEach((key, index) => {
-                const originalText = articles[key].content.join('').replace(/<[^>]+>/g, '').replace(/\s/g, '');
-                const transcript = (readingTranscripts[index] || '').replace(/\s/g, '');
-                totalSimilarity += stringSimilarity(originalText, transcript);
-            });
-            const avgSimilarity = articleKeys.length > 0 ? totalSimilarity / articleKeys.length : 0;
-            const readingScore = Math.round(avgSimilarity * 20);
-
-            // Article Question Score (30%)
-            let totalArticleQScore = 0;
-            const totalArticleQuestions = 9;
-            for(let i=0; i<totalArticleQuestions; i++) {
-                totalArticleQScore += calculateIndividualQuestionScore(articleQuestionTranscripts[i] || '');
-            }
-            const articleQScore = Math.round((totalArticleQScore / totalArticleQuestions) * 30);
-
-            // Personal Question Score (50%)
-            let totalPersonalQScore = 0;
-            const totalPersonalQuestions = personalQuestions.length;
-             for(let i=0; i<totalPersonalQuestions; i++) {
-                totalPersonalQScore += calculateIndividualQuestionScore(personalQuestionTranscripts[i] || '');
-            }
-            const personalQScore = Math.round((totalPersonalQScore / totalPersonalQuestions) * 50);
-
-            const totalScore = readingScore + articleQScore + personalQScore;
-            
-            totalScoreEl.textContent = `${totalScore} / 100`;
-            
-            resultsDetails.innerHTML = `
-                ${createResultCard('朗讀 (20%)', readingScore, 20, '根據發音準確度評分。')}
-                ${createResultCard('文章問答 (30%)', articleQScore, 30, '根據回答完整度評分。')}
-                ${createResultCard('個人問題 (50%)', personalQScore, 50, '根據回答完整度評分。')}
-            `;
-
-            resultsLoader.classList.add('hidden');
-            resultsContent.style.display = 'block';
-        }, 500); 
-    }
-
-    function calculateIndividualQuestionScore(transcript) {
-        const words = (transcript || '').split(' ').filter(w => w.length > 0);
-        if (!transcript || transcript === '(未辨識到語音)') return 0;
-        if (words.length <= 2) return 0.4;
-        if (words.length <= 4) return 0.6;
-        if (words.length <= 7) return 0.8;
-        return 1.0;
-    }
-
-    function stringSimilarity(s1, s2) {
-        let longer = s1, shorter = s2;
-        if (s1.length < s2.length) { longer = s2; shorter = s1; }
-        if (longer.length === 0) return 1.0;
-        return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
-    }
-
-    function editDistance(s1, s2) {
-        s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
-        const costs = [];
-        for (let i = 0; i <= s1.length; i++) {
-            let lastValue = i;
-            for (let j = 0; j <= s2.length; j++) {
-                if (i === 0) costs[j] = j;
-                else if (j > 0) {
-                    let newValue = costs[j - 1];
-                    if (s1.charAt(i - 1) !== s2.charAt(j - 1))
-                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                    costs[j - 1] = lastValue;
-                    lastValue = newValue;
-                }
-            }
-            if (i > 0) costs[s2.length] = lastValue;
-        }
-        return costs[s2.length];
-    }
-
-    function createResultCard(title, score, maxScore, feedback) {
-        return `
-            <div class="p-4 border rounded-lg shadow-sm">
-                <div class="flex justify-between items-center">
-                    <h4 class="text-xl font-bold text-gray-700">${title}</h4>
-                    <p class="text-2xl font-bold text-sky-600">${score} <span class="text-lg text-gray-500">/ ${maxScore}</span></p>
-                </div>
-                <p class="mt-2 text-gray-600"><strong>評語:</strong> ${feedback}</p>
-            </div>
-        `;
-    }
-
-    // --- EVENT LISTENERS ---
-    window.addEventListener('load', () => {
-        if (!isCompatible) {
-            compatibilityCheck.classList.remove('hidden');
-            startExamBtn.disabled = true;
-        }
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = loadJapaneseVoice;
-        }
-        initExam();
-    });
-
-    userNameInput.addEventListener('input', (e) => {
-        userName = e.target.value.trim() || 'ティム';
-        renderArticleQuestions();
-        renderPersonalQuestions();
-    });
-
-    startExamBtn.addEventListener('click', () => goToStep(2));
-
-    toggleAnswersBtn.addEventListener('click', () => {
-        isAnswersVisible = !isAnswersVisible;
-        mainContainer.classList.toggle('answers-hidden');
-        updateToggleButton(toggleAnswersBtn, isAnswersVisible, {
-            visible: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.866 3.866m1.212 1.212L12 12" /></svg>`,
-            hidden: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.057 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`
-        });
-    });
-    
-    toggleFuriganaBtn.addEventListener('click', () => {
-        isFuriganaVisible = !isFuriganaVisible;
-        mainContainer.classList.toggle('furigana-hidden');
-        updateToggleButton(toggleFuriganaBtn, isFuriganaVisible, {
-            visible: 'Aあ',
-            hidden: 'A'
-        });
-    });
-
-    document.body.addEventListener('click', (e) => {
-        const target = e.target.closest('.record-btn');
-        if (target) handleRecording(target);
-    });
-    
-    finishExamBtn.addEventListener('click', calculateAndDisplayResults);
-    restartExamBtn.addEventListener('click', initExam);
-        
-    </script>
+    document.body.addEventListener('click', (e) => {
+        const target = e.target.closest('.record-btn');
+        if (target) handleRecording(target);
+    });
+    
+    finishExamBtn.addEventListener('click', calculateAndDisplayResults);
+    restartExamBtn.addEventListener('click', initExam);
+        
+    </script>
 </body>
 </html>
